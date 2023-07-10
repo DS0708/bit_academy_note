@@ -7,7 +7,7 @@
 ```
 
 ---
-<img src="./pngfile/1.PNG" alt="전체그림" width="200">
+<img src="pngfile/1.PNG" alt="전체그림" width="500">
 
 > 다음과 같이 설정 후 다음 클릭
 
