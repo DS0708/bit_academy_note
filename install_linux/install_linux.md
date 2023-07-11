@@ -9,6 +9,9 @@
 ---
 <img src="pngfile/1.PNG" alt="전체그림" width="500">
 
+![Alt text](<pngfile/1.PNG>)
+
+
 > 다음과 같이 설정 후 다음 클릭
 
 <img src="./pngfile/2.PNG" alt="전체그림" width="500">
