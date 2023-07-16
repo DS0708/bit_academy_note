@@ -387,26 +387,34 @@ Tomcat download
 
 ```
 version 01
+Model 1 (Only JSP)
+
     - emaillist01
     - guestbook01
 ```
 
 ```
 version 02
+Model2 (Servlet + JSP) MVC
+
     - emaillist02
     - guestbook02
     - mysite 02
 ```
 ```
 version 03
+Spring MVC, xml 
+
     - mysite 03
 ```
 ```
 version 04
+Spring MVC, java 
     - mysite 04
 ```
 ```
 version 05
+Spring Boot
     - mysite 05
 ```
 ---
@@ -421,6 +429,89 @@ version 05
 2. request 연장
 3. request dispatch (코드에 있다.)
 4. request forward (코드에 있다.)
+
+---
+## `0713`
+---
+### mysite 프로젝트
+```
+mysite
+|--- mysite02
+|--- mysite03
+|--- mysite04
+|--- mysite05
+```
+---
+### mysite 구조
+
+```
+Dao             CRUD          DB
+User Dao         <->         User
+GuestBook Dao    <->         GuestBook
+BoardDao Dao     <->         Board
+```
+
+- /mystie02/main
+- /mystie02/
+- /mysite02/user?a=login or logout or join
+- /mysite02/guestbook?a=list or deleteform
+
+```
+Controller
+
+Main Controller
+User Controller         -> UserDao
+GuestBook Controller    -> GuestBookDao
+Board Controller        -> BoardDao
+```
+
+---
+## `0714`
+---
+## EL (Expression Language)
+- <%= 변수, 연산식, 리터럴, 메소드 %> -> ${ }
+- 자바코드는 아니다. 
+- 이름으로 저장되어 있는 객체를 찾는다. 
+- vo.getName() -> vo.name 이 호출된다.
+- JSP안에 자바코드가 들어가는 것을 분리해야함. -> 기술의 분리 (소프트웨어 개발 원리)
+---
+## 객체를 저장하는 방법 중 가장 중요한 2 가지
+- request.getAttribute(name)
+- session.getAttribute(name)
+---
+## JSTL (JSP Standard Tag Library)
+- JSP에서 태그
+- sessiong에 없으면 JSP에서 찾는다.
+---
+> JSP 에서 자바 코드를 쓰지 않겠다.
+---
+### Scope
+1. Session 의 name, object table
+    - `Session Scope`
+    - logout 시 사라짐
+2. request 의 name, object table
+    - `Request Scope`
+    - response 발생 시 사라짐
+3. context 의 name, object table
+    - `Application Scope `
+    - Tomcat이 내려가면 사라짐
+    - request.getServletScope ?
+4. JSP 의 name, object table
+    - `Page Scope`
+    - JSP를 return 할 시에 사라짐
+```
+1. 객체의 Scope (존속 범위) : 객체가 존재하는 범위
+
+2. 객체가 오래 지속되는 순서
+Application(Context) Scope > Session Scope > Request Scope > Page Scope
+
+ 3. EL이 이름으로 객체를 찾는 순서 
+ Application(Context) Scope < Session Scope < Request Scope < Page Scope
+ 
+4. 주의
+ 같은 이름으로 여러범위에 객체를 저장하는 경우 주의가 필요하다.
+```
+
 
 
 
