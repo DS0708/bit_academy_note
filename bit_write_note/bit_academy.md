@@ -511,6 +511,294 @@ Application(Context) Scope > Session Scope > Request Scope > Page Scope
 4. 주의
  같은 이름으로 여러범위에 객체를 저장하는 경우 주의가 필요하다.
 ```
+---
+## `0714`
+
+- EJB (Enterprise Java Bean)
+- Dao, Vo 같은 애들의 의존 관계를 관리하는 컨테이너
+- WAS 안에 들어있다.
+- Tomcat은 EJB 기능이 없다. 
+- Servlet은 Tomcat(WAS) 가 관리. 
+- DI : Dependency Injection
+- EJB 는 EJB가 요구하는 CRUD 이외의 이상한 코드가 많음 .
+- `Spring Container` : JAVA EE Without EJB
+---
+- Enterprise Java Bean 이란?
+      
+  1. 1998년 3월 Sun에서 엔터프라이즈급 어플리케이션 개발을 단순화하기 위해 발표한 스펙 
+
+  2. 다수의 J2EE 서버 개발 벤더에서 EJB 스펙을 구현하여 WAS 제품 출시
+        
+      예) BEA의 WebLogic, IBM의 WebSphere, TMax의 Jeus 등 
+
+  3. 보안, 트랜잭션지원, 분산 컴퓨팅 등의 엔터프라이즈 어플리케이션 개발 시 필요한 다양한 서비스  
+      를 컨테이너에서 제공하며 개발자는 비즈니스 로직에 전념하도록 지원
+
+  4. 컨테이너의 다양한 서비스를 제공받기 위해서는 지켜야 하는 EJB 스펙 자체가 복잡  작성된 코드는 
+     EJB 컨테이너가 없을 경우 사용할 수 없으며 EJB 컨테이너도 벤더에 따라 구현한 내용이 다르고 컨테이너가 
+     변경될 경우 호환이 어렵다
+---
+### Spring
+ - 2002년 로드 존슨( Rod Johnson ) 이 쓴 「Expert one-on-one:J2EE Design and Development」에서 
+   소개된 소스코드를 기반으로 2003년 2월에 시작된 오픈 소스 프로젝트 
+
+ - POJO(Plain Old Java Object) 특정클래스를 상속하거나 인터페이스를 구현하지 않는 평범한 자바 클래스(느슨한      
+    Java Bean, Spring Bean)를 이용하며 단순하지만 EJB에서 제공하는 고급 기술을  제공한다. 
+
+     - 진정한 의미의 자바 개발의 폭 넓은 간소화 를 실현한  프레임워크
+
+     -  20여 개의 모듈과 수십만 라인의 복잡하고 방대한 규모
+	      
+     -  불필요하게 무겁지 않다. ( EJB와 비교 )
+	      
+     -  코드는 단순하고 개발과정은  편리
+	      
+     -  고급 기능을  세련된 방식으로 적용
+          
+     -  군더더기 없이 깔끔한 기술을 가진 "경량급" 프레임워크
+	      
+     -  비슷한  기술 수준에서  훨씬 빠르고  간편하게  작성이 가능    
+
+ - 컨테이너( Container )
+
+        1. EJB의 비즈니스 서비스 컨테이너의 기능은 유지하되 복잡성을 제거한 컨테이너의 필요성
+             
+        2. 객체들의 라이프사이클을 관리해주는 컨테이너의 기본적인 기능
+             
+        3. 컨테이너에서 제공하는 API를 상속받거나 구현하여 코드를 작성하는 부분들을 제거 
+             
+        4. 컨테이너를 이루는 파일자체가 몇 메가 밖에 안 되는 작은 사이즈이며 구동에 필요한 시간이 짧고 자체 부하는 
+           무시할 수준이고 컨테이너 내에 객체를 배치하는 복잡한 과정이 짧다.
+             
+        5. 컨테이너의 필요성 
+            
+       가) 컴포넌트, 객체의 자유로운 삽입이 가능하도록 하기 위한 호출의 독립성 
+            
+       나) 서비스를 설정하거나 찾기 위한 일관된 방법을 제시 
+            
+       다) 싱글톤이나 팩토리를 구현할 필요 없이 단일화된 객체에 대한 접근방법을 제공 
+            
+       라) 비즈니스 객체에 부가적으로 필요한 각종 엔터프라이즈 서비스를 제공 
+---
+### 주요모듈
+
+![Alt text](image.png)
+---
+- Application Container
+- Spring Container
+- DI Container
+- 다 같은 말임.
+---
+- 주요 전략
+
+        1. POJO를 이용한 가볍고(lightweight) 비침투적(non-invasive) 개발 
+             
+        2. DI와 인터페이스 지향을 통한 느슨한 결합도(loose coupling)
+             
+        3. Aspect와 공통 규약을 통한 선언적(declarative) 프로그래밍 
+             
+        4. Aspect와 템플릿(template)을 통한 반복적이고 상투적인(boilerplate) 코드 제거
+---
+### POJO
+-  (P)lain (O)ld (J)ava (O)bject
+
+   - 자바 언어와  꼭 필요한  API외에는 특정 규약에 종속되지 않는다. 
+
+   - 특정 환경에 종속되지 않는다. (기술과 비즈니스 분리)
+
+   - 스프링에서는 스프링에 특화된 인터페이스 구현을 요구하지 않음
+  
+   - 스프링 자체에 의존성이 높은 클래스 확장을  거의 요구 하지 않음
+
+---
+### IoC(제어역전) & DI(의존 관계 주입)
+
+ 1) 스프링의 가장 기본이 되는 기술이자  스프링  핵심 개발 원칙
+
+ 2) Bean : 스프링이 제어권을 가지고 직접 만들고 관계를 부여하는 오브젝트
+
+ 3) 스프링 빈은 스프링  컨테이너가 생성과 관계 설정 등을  제어
+
+ 4) IoC(DI) Container  =  Bean Factory = Application Context
+---
+### AOP (Aspect Oriented Programming)
+- 관점 지향 프로그래밍 
+
+   - OOP를 더욱 더 OOP 답게 해 주는 ( 더욱 더 완벽하게 해 주는)  기술
+
+   - 관심의 분리 ( Separation of Concern )
+	
+   - 횡단 관심( Crosscutting Concern )과  핵심관심(  Core Concern )
+	
+   - 핵심관심  모듈과  횡단 관심 모듈이 긴밀하게 결합 ( 핵심 모듈이 필요한 시점에..)
+    
+   -  OOP 문제점 : 중복코드,  지저분한 코드,  생산성 저하,  재활용성의 문제점
+	
+   - 필요한 시점에  횡단 관심 모듈을 삽입하여 동작하게 하는 기술.
+	
+   - EJB AOP, JDK Dynamic Proxy, AspectJ, Spring AOP      
+---
+```
+                Application                          |
+ ----------------------------------------------------|              
+                |         |                          |  외부 Library  
+    Spring web MVC      Spring Web(Servlet 구현)      |
+        |                                            |
+        |
+        |
+    Spring Context
+        |
+        |
+        |       
+    Spring Core
+```
+
+---
+![Alt text](<Screenshot 2023-07-17 at 1.37.51 PM.png>)
+
+## `0715`
+
+### Spring url 매핑 예시
+Get /board
+
+(R)Get /board/10
+
+(C)POST /board
+
+(U)PUT /board/10
+
+(D)DELETE /board/10
+
+> Get /board/page/10 은 이상하다.
+>> 이럴때는 /board?page=10 더 괜찮다. 
+
+---
+### Emaillist03
+```
+/emaillist03
+    |---/WEB-INF
+    |       |--- web.xml
+    |       |--- spring-servlet.xml
+    |       |--- applicationContext.xml (RootApplicationContext)
+    |       |--- classes
+                    |
+                    |---  com....Controller
+                    |           |---EmaillistController.class
+                    |
+                    |---   com...repository
+                    |           |---EmailRepository.class
+                    |---   com...vo
+                    |           |--- EmaillistVo
+    |
+    |- /lib
+    |   |---spring.jar
+    |   |--- jstl.jar
+    |   |--- NVC.jar ?
+```
+### Tomcat
+```
+ContextLoad Listener
+Encoding Filter
+Dispatcher Servlet
+```
+> web.xml 에서 설정
+
+---
+Spring이 3단계의 layer로 만들어 놓음.
+
+Controller -> service -> Repository
+---
+## `0721`
+1. Logging
+2. AOP
+3. IoC Container
+---
+### Logging
+
+- Log4J 안씀
+- java.util.logging 안씀
+- Jakarta common Logging ()
+- Log4, Logback 구별할 줄 알아야 함. 
+- 우리는 Logbakc를 사용할 것임
+---
+Logger 와 Appendder
+
+1.  Logger는 패키지 기준으로 설정 
+2. Appender 설정  
+
+---
+### AOP
+- what -> advice
+- where -> point cut
+- when -> join point
+---
+## `0724`
+```
+프로젝트 구조
+
+[src]
+    |- [main]
+    |   |- [java]   패키지 + 자바클래스
+    |   |   |-Controller
+    |   |       |- MyController.java
+    |   |
+    |   |- [resources]  패키지 + 설정파일
+    |           |-Config
+    |           |   |- applicationCategory
+    |           |
+    |           |- db
+    |               |- mybatis
+    |                   |- configuration.xml
+    |
+    |- [test] (Junit으로 써야함)
+    |      |- Controller
+    |           |- TestMyController.java
+```
+> Test를 통과해야지만 build를 한다.
+
+```
+어플리케이션 구조
+
+[Tomcat]
+    |- [Webapps]
+    |   |- [mysite]  
+    |           |- [WEb-INF]
+    |                   |- classes
+    |                       |- controller
+    |                       |    |- MyController.class (컴파일 됨)
+    |                       |
+    |                       |- config
+    |                       |    |- applicationCategory (복붙)
+    |                       |
+    |                       |- db
+    |
+```
+---
+- user : xml 설정
+- soundsystem : java 설정 (자동)  -> junit5사용 (TDD)
+- videosystem: java 설정(bean 설정)
+---
+## `0725`
+### Spring Boot
+
+- BootStrap : 어떤 일을 하기전에 모든 준비를 마치는 것.
+- Spring Boot(Tool Library) : Application 사용... `모든 준비`를 마치는 것.
+    1. code 작성 (business 작성)
+    2. Settings (설정) -> `Spring Boot 가 대신 해줄 수 있는 것`
+    3. Dependencies (의존성) -> `Spring Boot 가 대신 해줄 수 있는 것`
+
+> Spring Boot는 설정과 의존성을 간소화시켜주는 Tool Library이다.
+---
+com.bitacademy.springboot.helloworld
+---
+## `0726`
+- JSP 가 없어져야 Spring boot 를 써서 War가 아닌 Jar로 만들 수 있다.
+- JSP를 사용하기 때문에 web.xml을 써야함.
+- Thymeleaf -> JSP 없애기 ?
+    1. 정적 자원을 Classpath로 이동
+    2. web.xml을 없애기
+    3. jsp 를 템플릿으로 바꾸기
+
 
 
 
